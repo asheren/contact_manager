@@ -5,7 +5,6 @@ let(:person) do
 	Person.new(first_name: 'Alice', last_name: 'Smith')
 end
   it 'is valid' do
-  	person = Person.new(first_name: 'Alice', last_name: 'Smith')
   	expect(person).to be_valid
   end
 
