@@ -6,8 +6,6 @@ gem 'rails', '4.0.0'
 #Use unicorn instead of webrick
 gem 'unicorn'
 
-
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
