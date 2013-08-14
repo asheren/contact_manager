@@ -24,7 +24,7 @@ class PhoneNumbersController < ApplicationController
   # POST /phone_numbers
   # POST /phone_numbers.json
   def create
-    @phone_number = PhoneNumber.new(phone_number_params)
+    @phone_number = PhoneNumber.new(params[:phone_number])
 
     respond_to do |format|
       if @phone_number.save
