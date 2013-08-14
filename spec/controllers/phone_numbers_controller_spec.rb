@@ -65,6 +65,10 @@ describe PhoneNumbersController do
 
   describe "POST create" do
     describe "with valid params" do
+
+      let(:alice) { Person.create(first_name: 'Alice', last_name: 'Smith') }
+      let(:valid_attributes) { {number: '555-8888', person_id: alice.id} }
+
       it "creates a new PhoneNumber" do
         expect {
           post :create, {:phone_number => valid_attributes}, valid_session
@@ -79,7 +83,7 @@ describe PhoneNumbersController do
 
       it "redirects to the created phone_number" do
         post :create, {:phone_number => valid_attributes}, valid_session
-        response.should redirect_to(PhoneNumber.last)
+        expect(response).to redirect_to(alice)
       end
     end
 
@@ -102,6 +106,9 @@ describe PhoneNumbersController do
 
   describe "PUT update" do
     describe "with valid params" do
+
+      let(:bob) { Person.create(first_name: 'Bob', last_name: 'Jones') }
+      let(:valid_attributes) { {number: '555-5678', person_id: bob.id} }
       it "updates the requested phone_number" do
         phone_number = PhoneNumber.create! valid_attributes
         # Assuming there are no other phone_numbers in the database, this
@@ -121,7 +128,7 @@ describe PhoneNumbersController do
       it "redirects to the phone_number" do
         phone_number = PhoneNumber.create! valid_attributes
         put :update, {:id => phone_number.to_param, :phone_number => valid_attributes}, valid_session
-        response.should redirect_to(phone_number)
+        expect(response).to redirect_to(bob)
       end
     end
 
