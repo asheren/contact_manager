@@ -23,8 +23,9 @@ describe EmailAddressesController do
   # This should return the minimal set of attributes required to create a valid
   # EmailAddress. As you add validations to EmailAddress, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "address" => "MyString" } }
-
+  def valid_attributes
+    { "address" => "MyString", "person_id" => 1 } 
+  end
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # EmailAddressesController. Be sure to keep this updated too.
@@ -63,6 +64,9 @@ describe EmailAddressesController do
 
   describe "POST create" do
     describe "with valid params" do
+
+      let(:alice) { Person.create(first_name: 'Alice', last_name: 'Smith') }
+      let(:valid_attributes) { {address: 'test@test.com', person_id: alice.id} }
       it "creates a new EmailAddress" do
         expect {
           post :create, {:email_address => valid_attributes}, valid_session
@@ -77,7 +81,7 @@ describe EmailAddressesController do
 
       it "redirects to the created email_address" do
         post :create, {:email_address => valid_attributes}, valid_session
-        response.should redirect_to(EmailAddress.last)
+        expect(response).to redirect_to(alice)
       end
     end
 
@@ -100,6 +104,10 @@ describe EmailAddressesController do
 
   describe "PUT update" do
     describe "with valid params" do
+
+       let(:bob) { Person.create(first_name: 'Bob', last_name: 'Jones') }
+       let(:valid_attributes) { {address: 'test@test.com', person_id: bob.id} }
+
       it "updates the requested email_address" do
         email_address = EmailAddress.create! valid_attributes
         # Assuming there are no other email_addresses in the database, this
@@ -119,7 +127,7 @@ describe EmailAddressesController do
       it "redirects to the email_address" do
         email_address = EmailAddress.create! valid_attributes
         put :update, {:id => email_address.to_param, :email_address => valid_attributes}, valid_session
-        response.should redirect_to(email_address)
+        response.should redirect_to(bob)
       end
     end
 

@@ -6,6 +6,7 @@ describe 'the person view', type: :feature do
 
 	let(:person) { Person.create!(first_name: 'John', last_name: 'Doe') }
 
+	describe 'Phone numbers' do 
 	before(:each) do
 		person.phone_numbers.create(number: "555-1234")
 		person.phone_numbers.create(number: "555-5678")
@@ -59,9 +60,23 @@ describe 'the person view', type: :feature do
 	 	 old_number = phone.number
 
 	 	 first(:link, 'delete').click
-	 	 #page.fill_in('Number', with: '555-9191')
-	 	 #page.click_button('delete')
 	 	 expect(current_path).to eq(person_path(person))
 	 	 expect(page).to_not have_content(old_number)
 	 end
+	end
+
+	describe 'Email Addresses' do 
+
+		before(:each) do
+			person.email_addresses.create(address: "test@test.com")
+			person.email_addresses.create(address: "asheren@test.com")
+			visit person_path(person)
+		end
+
+		 it 'should list each email' do
+		 	EmailAddress.all.each do |email_address|
+  			expect(page).to have_selector('li', text: email_address.address)
+  		end
+  	end
+	end
 end
