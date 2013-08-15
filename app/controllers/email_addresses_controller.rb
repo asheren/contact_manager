@@ -55,9 +55,11 @@ class EmailAddressesController < ApplicationController
   # DELETE /email_addresses/1.json
   def destroy
     @email_address = EmailAddress.find(params[:id])
+    person = @email_address.person 
     @email_address.destroy
+
     respond_to do |format|
-      format.html { redirect_to email_addresses_url }
+      format.html { redirect_to person_path person }
       format.json { head :no_content }
     end
   end
