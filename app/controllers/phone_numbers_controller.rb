@@ -56,10 +56,11 @@ class PhoneNumbersController < ApplicationController
   def destroy
     puts params.inspect 
     @phone_number = PhoneNumber.find(params[:id])
+    person = @phone_number.person
     @phone_number.destroy
 
     respond_to do |format|
-      format.html { redirect_to people_url }
+      format.html { redirect_to person_path person }
       format.json { head :no_content }
     end
   end

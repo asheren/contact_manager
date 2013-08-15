@@ -4,7 +4,7 @@ require 'capybara/rspec'
 
 describe 'the person view', type: :feature do 
 
-	let(:person) { Person.create(first_name: 'John', last_name: 'Doe') }
+	let(:person) { Person.create!(first_name: 'John', last_name: 'Doe') }
 
 	before(:each) do
 		person.phone_numbers.create(number: "555-1234")
@@ -50,7 +50,7 @@ describe 'the person view', type: :feature do
 
 	it 'has links to delete phone numbers' do
 		person.phone_numbers.each do |phone|
-			expect(page).to have_link('delete', href: phone_number_path(phone), method: :delete)
+			expect(page).to have_selector("a[href='#{phone_number_path(phone)}'][data-method='delete']")
 		end
 	end
 
@@ -59,9 +59,9 @@ describe 'the person view', type: :feature do
 	 	 old_number = phone.number
 
 	 	 first(:link, 'delete').click
-	 	 page.fill_in('Number', with: '555-9191')
-	 	 page.click_button('Delete Phone number')
+	 	 #page.fill_in('Number', with: '555-9191')
+	 	 #page.click_button('delete')
 	 	 expect(current_path).to eq(person_path(person))
-	 	 expect(page).to_not have_content('555-9191')
+	 	 expect(page).to_not have_content(old_number)
 	 end
 end

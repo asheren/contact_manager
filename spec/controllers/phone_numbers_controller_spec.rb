@@ -166,7 +166,7 @@ describe PhoneNumbersController do
     it "redirects to the phone_numbers list" do
       phone_number = PhoneNumber.create! valid_attributes
       delete :destroy, {:id => phone_number.to_param, :phone_number => valid_attributes}, valid_session
-      expect(response).to redirect_to(person_id)
+      expect(response).to redirect_to(person_path(allison))
     end
   end
 
