@@ -67,7 +67,7 @@ describe EmailAddressesController do
 
       let(:alice) { Person.create(first_name: 'Alice', last_name: 'Smith') }
       let(:valid_attributes) { {address: 'test@test.com', person_id: alice.id} }
-      
+
       it "creates a new EmailAddress" do
         expect {
           post :create, {:email_address => valid_attributes}, valid_session
@@ -128,7 +128,7 @@ describe EmailAddressesController do
       it "redirects to the email_address" do
         email_address = EmailAddress.create! valid_attributes
         put :update, {:id => email_address.to_param, :email_address => valid_attributes}, valid_session
-        response.should redirect_to(bob)
+        expect(response).to redirect_to(bob)
       end
     end
 
