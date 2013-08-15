@@ -73,10 +73,14 @@ describe 'the person view', type: :feature do
 			visit person_path(person)
 		end
 
-		 it 'should list each email' do
+		it 'should list each email' do
 		 	EmailAddress.all.each do |email_address|
   			expect(page).to have_selector('li', text: email_address.address)
   		end
+  	end
+
+  	it 'has an add email address link' do
+  		expect(page).to have_link('Add email address', href: new_email_address_path(person_id: person.id))
   	end
 	end
 end
