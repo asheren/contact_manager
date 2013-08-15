@@ -54,9 +54,12 @@ class PhoneNumbersController < ApplicationController
   # DELETE /phone_numbers/1
   # DELETE /phone_numbers/1.json
   def destroy
+    puts params.inspect 
+    @phone_number = PhoneNumber.find(params[:id])
     @phone_number.destroy
+
     respond_to do |format|
-      format.html { redirect_to phone_numbers_url }
+      format.html { redirect_to people_url }
       format.json { head :no_content }
     end
   end
